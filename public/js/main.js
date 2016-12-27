@@ -32,20 +32,26 @@ function inicializaContadores(){
 
 function inicializaCronometro(){
     var tempoRestante = $("#tempo-digitacao").text();
+    botaoReiniciar.attr("disabled", true);
     campo.one("focus", function(){
         var cronometroId = setInterval(function(){
             tempoRestante--;
             $("#tempo-digitacao").text(tempoRestante);
             if(tempoRestante<1){  
-                campo.attr("disabled", true);
-                botaoReiniciar.attr("disabled", false);
+                finalizaJogo();
                 clearInterval(cronometroId);
-                campo.toggleClass("campo-desativado");
             };
         }, 1000);
-        botaoReiniciar.attr("disabled", true);
+        
     });
 };
+
+function finalizaJogo(){
+    campo.attr("disabled", true);
+    botaoReiniciar.attr("disabled", false);
+    campo.toggleClass("campo-desativado");
+    inserePlacar();
+}
 
 function reiniciaJogo(){
     campo.attr("disabled", false);
